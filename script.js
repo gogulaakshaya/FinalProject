@@ -219,6 +219,8 @@ const products = [
         rating: 4.5,
         image: "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=500"
     }
+    
+
 
 ];
 
@@ -490,35 +492,6 @@ document
 
     });
 
-
-/* ==========================================
-   CATEGORY FILTER
-========================================== */
-
-function filterCategory(category) {
-
-    currentCategory = category;
-
-
-    if (category === "all") {
-
-        displayProducts(products);
-
-        return;
-    }
-
-
-    const result =
-        products.filter(function(product) {
-
-            return product.category === category;
-
-        });
-
-
-    displayProducts(result);
-
-}
 
 
 /* ==========================================
