@@ -570,6 +570,36 @@ function placeOrder() {
 
 }
 
+/* ==========================================
+   CATEGORY FILTER
+========================================== */
+
+function filterCategory(category) {
+
+    currentCategory = category;
+
+
+    if (category === "all") {
+
+        displayProducts(products);
+
+        return;
+    }
+
+
+    const result =
+        products.filter(function(product) {
+
+            return product.category === category;
+
+        });
+
+
+    displayProducts(result);
+
+}
+
+
 
 /* ==========================================
    START WEBSITE
