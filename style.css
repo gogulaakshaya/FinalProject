@@ -565,9 +565,6 @@ body > button:hover,
     }
 
 }
-/* ==============================
-   LOGIN / REGISTER BUTTONS
-============================== */
 
 h1 {
     position: relative;
@@ -656,4 +653,94 @@ h1 {
 
 .category-bar button:active {
     transform: scale(0.96);
+}
+#forgot-password {
+    width: 350px;
+    margin: 30px auto;
+    padding: 25px;
+    text-align: center;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#forgot-password input {
+    display: block;
+    width: 90%;
+    padding: 12px;
+    margin: 12px auto;
+}
+
+#forgot-password button {
+    padding: 12px 25px;
+    cursor: pointer;
+}
+
+#resetMessage {
+    margin-top: 15px;
+}
+.account-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px;
+}
+
+.account-buttons .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color:pink;
+    color:black;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.account-buttons .btn:hover {
+    background: #ed6386;
+    color: white;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 15px rgba(237, 99, 134, 0.25);
+}
+
+.account-buttons .btn:active {
+    transform: scale(0.96);
+}
+.account-buttons .btn:first-child {
+    background: white;
+    color: #ed6386;
+
+    border: 2px solid #ed6386;
+
+    border-radius: 25px;
+
+    padding: 10px 30px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+.account-buttons .btn:nth-child(2) {
+    background: white;
+    color: #ed6386;
+
+    border: 2px solid #ed6386;
+
+    border-radius: 25px;
+
+    padding: 10px 30px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
 }

@@ -609,41 +609,65 @@ displayProducts(products);
 
 updateCart();
 
-/* ==============================
-   LOGIN
-============================== */
+// Show Forgot Password section
+function showForgotPassword() {
 
-function login() {
+    document.getElementById("login-section").style.display = "none";
 
-    const email = prompt("Enter your email:");
-
-    if (email) {
-        alert("Login successful! Welcome back ❤️");
-    }
-
+    document.getElementById("forgot-password").style.display = "block";
 }
 
 
-/* ==============================
-   REGISTER
-============================== */
+// Show Login section
+function showLogin() {
 
-function register() {
+    document.getElementById("login-section").style.display = "block";
 
-    const name = prompt("Enter your name:");
+    document.getElementById("forgot-password").style.display = "none";
+}
 
-    if (!name) {
-        return;
+
+// Show / Hide Password
+function togglePassword() {
+
+    const password = document.getElementById("password");
+
+    if (password.type === "password") {
+        password.type = "text";
+    } else {
+        password.type = "password";
     }
+}
 
-    const email = prompt("Enter your email:");
 
-    if (!email) {
-        return;
-    }
+// Reset Password
+const resetForm = document.getElementById("resetForm");
 
-    alert(
-        "Registration successful! 🎉\nWelcome " + name
-    );
+if (resetForm) {
 
+    resetForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const newPassword =
+            document.getElementById("newPassword").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+        const message =
+            document.getElementById("resetMessage");
+
+
+        if (newPassword !== confirmPassword) {
+
+            message.textContent = "❌ Passwords do not match.";
+
+            return;
+        }
+
+
+        message.textContent =
+            "✅ Password reset successfully!";
+    });
 }
