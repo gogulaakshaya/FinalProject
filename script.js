@@ -1,6 +1,28 @@
 /* ==========================================
    KL E-COMMERCE STORE
 ========================================== */
+// ACCOUNT STORAGE
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+// Demo admin account (for college project)
+if (!users.some(user => user.role === "admin")) {
+    users.push({
+        name: "Akshaya",
+        email: "gogulaakshaya1@gmail.com",
+        password: "admin123",
+        role: "admin"
+    });
+
+    localStorage.setItem("users", JSON.stringify(users));
+}
+
+function saveUsers() {
+    localStorage.setItem("users", JSON.stringify(users));
+}
+
+function getCurrentUser() {
+    return JSON.parse(localStorage.getItem("currentUser"));
+}
 
 const products = [
 
@@ -69,9 +91,9 @@ const products = [
 
     {
         id: 8,
-        name: "Cotton Casual Shirt",
+        name: "Avacado Facial Cream",
         price: 749,
-        category: "Shirts",
+        category: "Skincare",
         rating: 4.4,
         image: "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=500"
     },
@@ -134,7 +156,7 @@ const products = [
         id: 15,
         name: "Women's Summer Dress",
         price: 999,
-        category: "T-Shirts",
+        category: "Dresses",
         rating: 4.6,
         image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500"
     },
@@ -609,27 +631,21 @@ displayProducts(products);
 
 updateCart();
 
+
 // Show Forgot Password section
 function showForgotPassword() {
-
     document.getElementById("login-section").style.display = "none";
-
     document.getElementById("forgot-password").style.display = "block";
 }
 
-
 // Show Login section
 function showLogin() {
-
     document.getElementById("login-section").style.display = "block";
-
     document.getElementById("forgot-password").style.display = "none";
 }
 
-
 // Show / Hide Password
 function togglePassword() {
-
     const password = document.getElementById("password");
 
     if (password.type === "password") {
@@ -639,35 +655,81 @@ function togglePassword() {
     }
 }
 
-
 // Reset Password
 const resetForm = document.getElementById("resetForm");
 
 if (resetForm) {
-
     resetForm.addEventListener("submit", function(event) {
-
         event.preventDefault();
 
-        const newPassword =
-            document.getElementById("newPassword").value;
-
-        const confirmPassword =
-            document.getElementById("confirmPassword").value;
-
-        const message =
-            document.getElementById("resetMessage");
-
+        const email = document.getElementById("resetEmail").value.trim();
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+        const message = document.getElementById("resetMessage");
 
         if (newPassword !== confirmPassword) {
-
             message.textContent = "❌ Passwords do not match.";
-
             return;
         }
 
+        let users = JSON.parse(localStorage.getItem("users")) || [];
 
-        message.textContent =
-            "✅ Password reset successfully!";
+        const userIndex = users.findIndex(user =>
+            user.email.toLowerCase() === email.toLowerCase()
+        );
+
+        if (userIndex === -1) {
+            message.textContent = "❌ Email not registered.";
+            return;
+        }
+
+        users[userIndex].password = newPassword;
+
+        localStorage.setItem("users", JSON.stringify(users));
+
+        message.textContent = "✅ Password reset successfully!";
+        resetForm.reset();
+    });
+}
+
+const loginForm = document.getElementById("loginForm");
+
+if (loginForm) {
+    loginForm.addEventListener("submit", function(event) {
+        event.preventDefault(); // Stop page refresh
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const message = document.getElementById("loginMessage");
+
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+
+        const user = users.find(u =>
+            u.email.toLowerCase() === email.toLowerCase()
+        );
+
+        if (!user) {
+            message.textContent = "❌ Email is not registered.";
+            return;
+        }
+
+        if (user.password !== password) {
+            message.textContent = "❌ Incorrect password.";
+            return;
+        }
+
+        message.textContent = "✅ Login successful!";
+
+        localStorage.setItem("currentUser", JSON.stringify({
+            name: user.name,
+            email: user.email,
+            role: user.role
+        }));
+
+        if (user.role === "admin") {
+            window.location.href = "admin.html";
+        } else {
+            window.location.href = "index.html";
+        }
     });
 }

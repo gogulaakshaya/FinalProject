@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KL E-Commerce Admin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fffafb;
+            margin: 0;
+            color: #182536;
+        }
+        header {
+            background: #ffe4eb;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        main { padding: 25px; }
+        section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px #ddd;
+        }
+        button {
+            padding: 10px 18px;
+            background: #ed6386;
+            color: white;
+            border: 0;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Admin Dashboard</h1>
+    <button onclick="logout()">Logout</button>
+</header>
+
+<main>
+    <h2 id="welcome"></h2>
+
+    <section>
+        <h2>Registered Users</h2>
+        <div id="usersList"></div>
+    </section>
+
+    <section>
+        <h2>Customer Orders</h2>
+        <div id="ordersList"></div>
+    </section>
+</main>
+
+<script>
+const currentUser =
+    JSON.parse(localStorage.getItem("currentUser"));
+
+if (!currentUser || currentUser.role !== "admin") {
+    alert("Admin access only");
+    window.location.href = "Login.html";
+}
+
+document.getElementById("welcome").textContent =
+    "Welcome, " + currentUser.name;
+
+const users =
+    JSON.parse(localStorage.getItem("users")) || [];
+
+const usersList = document.getElementById("usersList");
+
+users.filter(user => user.role === "user").forEach(user => {
+    usersList.innerHTML += `
+        <div class="item">
+            <strong>${user.name}</strong><br>
+            Email: ${user.email}
+        </div>
+    `;
+});
+
+if (!usersList.innerHTML) {
+    usersList.textContent = "No registered users yet.";
+}
+
+const orders =
+    JSON.parse(localStorage.getItem("orders")) || [];
+
+const ordersList = document.getElementById("ordersList");
+
+orders.forEach(order => {
+    ordersList.innerHTML += `
+        <div class="item">
+            <strong>Order: ${order.id}</strong><br>
+            Customer: ${order.customer}<br>
+            Email: ${order.email}<br>
+            Total: ₹${order.total}<br>
+            Status: ${order.status}
+        </div>
+    `;
+});
+
+if (!ordersList.innerHTML) {
+    ordersList.textContent = "No orders yet.";
+}
+
+function logout() {
+    localStorage.removeItem("currentUser");
+    window.location.href = "Login.html";
+}
+</script>
+
+</body>
+</html>
