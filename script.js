@@ -10,8 +10,15 @@ if (!users.some(user => user.role === "admin")) {
         name: "Akshaya",
         email: "gogulaakshaya1@gmail.com",
         password: "admin123",
-        role: "admin"
+        role: "user"
     });
+    users.push({
+        name: "Sindhu",
+        email: "sindhu@gmail.com",
+        password: "sindhu143",
+        role: "user"
+    });
+
 
     localStorage.setItem("users", JSON.stringify(users));
 }
