@@ -1,167 +1,236 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-    <title>KL E-Commerce</title>
-
-    <link rel="stylesheet" href="style.css">
-    
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KL E-Commerce Store</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-
-    <h1>🛒 KL E-Commerce Store
-        <div class="account-buttons">
-            <a href="Login.html" class="btn">Login</a>
-            <a href="Register.html" class="btn">Register</a>
+<!-- ================= GUEST HOME ================= -->
+<section id="guest-home-page" class="page-section">
+    <header class="main-header">
+        <div>
+            <h1>🛒 KL E-Commerce Store</h1>
+            <p>Shop your favourite products online</p>
         </div>
-    </h1>
-   <table class="category-bar">
-    <tr>
+        <div class="header-buttons">
+            <button onclick="showPage('login')">User Login</button>
+            <button onclick="showPage('register')">Register</button>
+            <button class="admin-link" onclick="showPage('admin-login')">Admin Login</button>
+        </div>
+    </header>
 
-        <td>
-            <button onclick="filterCategory('Fashion')">
-                Fashion
-            </button>
-        </td>
+    <nav class="category-bar">
+        <button onclick="filterProducts('all','guest')">All</button>
+        <button onclick="filterProducts('T-Shirts','guest')">T-Shirts</button>
+        <button onclick="filterProducts('Shirts','guest')">Shirts</button>
+        <button onclick="filterProducts('Jeans','guest')">Jeans</button>
+        <button onclick="filterProducts('Accessories','guest')">Accessories</button>
+        <button onclick="filterProducts('Skincare','guest')">Skincare</button>
+        <button onclick="filterProducts('Dresses','guest')">Dresses</button>
+    </nav>
 
-        <td>
-            <button onclick="filterCategory('Groceries')">
-                Groceries
-            </button>
-        </td>
+    <div class="search-area">
+        <input id="guestSearchBox" type="text" placeholder="Search products..." oninput="searchProducts('guest')">
+    </div>
 
-        <td>
-            <button onclick="filterCategory('Mobiles')">
-                Mobiles
-            </button>
-        </td>
+    <div class="notice">🔐 Login to add products to your cart and place orders.</div>
 
-        <td>
-            <button onclick="filterCategory('Electronics')">
-                Electronics
-            </button>
-        </td>
+    <h2 class="section-title">Popular Products</h2>
+    <div id="guestProductContainer" class="product-grid"></div>
 
-    </tr>
-</table>
+    <footer class="footer">
+        <h2>KLECommerce</h2>
+        <p>Home | Products | About Us | Contact Us | Help</p>
+        <p>Copyright © 2026 KLECommerce</p>
+    </footer>
+</section>
 
+<!-- ================= USER HOME ================= -->
+<section id="user-home-page" class="page-section" style="display:none;">
+    <header class="main-header user-header">
+        <div>
+            <h1>🛒 KL E-Commerce Store</h1>
+            <p id="userWelcome">Welcome!</p>
+        </div>
+        <div class="header-buttons">
+            <span class="logged-user" id="userNameDisplay"></span>
+            <button onclick="showPage('user-home')">Home</button>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </header>
 
-    <!-- Search -->
+    <nav class="category-bar">
+        <button onclick="filterProducts('all','user')">All</button>
+        <button onclick="filterProducts('T-Shirts','user')">T-Shirts</button>
+        <button onclick="filterProducts('Shirts','user')">Shirts</button>
+        <button onclick="filterProducts('Jeans','user')">Jeans</button>
+        <button onclick="filterProducts('Accessories','user')">Accessories</button>
+        <button onclick="filterProducts('Skincare','user')">Skincare</button>
+        <button onclick="filterProducts('Dresses','user')">Dresses</button>
+    </nav>
 
-    <input
-        type="text"
-        id="searchBox"
-        placeholder="Search products..."
-    >
+    <div class="search-area">
+        <input id="userSearchBox" type="text" placeholder="Search products..." oninput="searchProducts('user')">
+    </div>
 
+    <h2 class="section-title">Welcome to your store</h2>
+    <div id="userProductContainer" class="product-grid"></div>
 
-    <!-- Products -->
+    <section class="cart-section">
+        <h2>🛒 Shopping Cart</h2>
+        <div id="cartContainer"></div>
+        <h3>Cart Total: ₹<span id="cartTotal">0</span></h3>
+        <button class="order-btn" onclick="placeOrder()">Place Order</button>
+    </section>
 
-    <h2>Products</h2>
+    <section class="order-section">
+        <h2>📦 Order Tracking</h2>
+        <div id="orderContainer"></div>
+    </section>
 
-    <div id="productContainer"></div>
+    <section class="offers">
+        <h2>Today's Special Offers</h2>
+        <p>Flat 20% Discount on Fashion Products</p>
+        <p>Free Delivery Above ₹999</p>
+        <p>Buy One Get One on Selected Products</p>
+        <p>Extra Cashback on Electronics</p>
+    </section>
 
+    <footer class="footer">
+        <h2>KLECommerce</h2>
+        <p>Easy Returns | 24 x 7 Support | Secure Payment | Fast Delivery</p>
+        <p>Copyright © 2026 KLECommerce</p>
+    </footer>
+</section>
 
-    <!-- Cart -->
+<!-- ================= USER LOGIN ================= -->
+<section id="login-page" class="page-section auth-page" style="display:none;">
+    <div class="auth-card">
+        <div class="logo">🛒</div>
+        <h1>KL E-Commerce Store</h1>
+        <h2>User Login</h2>
+        <p>Login to continue shopping.</p>
 
-    <h2>Shopping Cart</h2>
+        <form id="loginForm">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
 
-    <div id="cartContainer"></div>
+            <label>Password</label>
+            <div class="password-box">
+                <input type="password" id="password" placeholder="Enter your password" required>
+                <button type="button" onclick="togglePassword()">👁</button>
+            </div>
 
+            <p id="loginMessage" class="message"></p>
+            <button type="submit" class="primary-btn">Login</button>
+        </form>
 
-    <h3>
-        Cart Total: ₹<span id="cartTotal">0</span>
-    </h3>
+        <a href="#forgot-password" onclick="showForgotPassword()">Forgot Password?</a>
+        <p>Don't have an account? <a href="#register" onclick="showPage('register')">Register</a></p>
+        <p><a href="#admin-login" onclick="showPage('admin-login')">Admin Login</a></p>
+        <button class="secondary-btn" onclick="showPage('home')">← Back to Home</button>
+    </div>
 
+    <div id="forgot-password" class="auth-card small-card" style="display:none;">
+        <div class="logo">🔐</div>
+        <h2>Reset Password</h2>
+        <p>Enter your registered email and create a new password.</p>
+        <form id="resetForm">
+            <label>Email</label>
+            <input type="email" id="resetEmail" required>
+            <label>New Password</label>
+            <input type="password" id="newPassword" required>
+            <label>Confirm Password</label>
+            <input type="password" id="confirmResetPassword" required>
+            <button type="submit" class="primary-btn">Reset Password</button>
+        </form>
+        <p id="resetMessage" class="message"></p>
+        <button class="secondary-btn" onclick="showLogin()">← Back to Login</button>
+    </div>
+</section>
 
-    <button onclick="placeOrder()">
-        Place Order
-    </button>
+<!-- ================= ADMIN LOGIN ================= -->
+<section id="admin-login-page" class="page-section auth-page" style="display:none;">
+    <div class="auth-card admin-auth">
+        <div class="logo">🔐</div>
+        <h1>KL E-Commerce Store</h1>
+        <h2>Admin Login</h2>
+        <p>Authorized administrators only.</p>
 
+        <form id="adminLoginForm">
+            <label>Admin Email</label>
+            <input type="email" id="adminEmail" placeholder="Enter admin email" required>
 
-    <!-- Order Tracking -->
+            <label>Admin Password</label>
+            <input type="password" id="adminPassword" placeholder="Enter admin password" required>
 
-    <h2>Order Tracking</h2>
+            <p id="adminLoginMessage" class="message"></p>
+            <button type="submit" class="primary-btn">Admin Login</button>
+        </form>
 
-    <div id="orderContainer"></div>
-  <table class="bottom-table" width="100%">
+        <button class="secondary-btn" onclick="showPage('login')">← User Login</button>
+        <button class="secondary-btn" onclick="showPage('home')">← Back to Home</button>
+    </div>
+</section>
 
-    <tr bgcolor="Pink">
+<!-- ================= REGISTER ================= -->
+<section id="register-page" class="page-section auth-page" style="display:none;">
+    <div class="auth-card">
+        <div class="logo">🛍️</div>
+        <h1>Create Account</h1>
+        <p>Register as a customer.</p>
 
-        <td colspan="4" align="center">
+        <form id="registerForm">
+            <label>Full Name</label>
+            <input type="text" id="name" placeholder="Full Name" required>
 
-            <h2>Today's Special Offers</h2>
+            <label>Email</label>
+            <input type="email" id="regEmail" placeholder="Email" required>
 
-            Flat 20% Discount on Fashion Products
-            <br><br>
+            <label>Phone</label>
+            <input type="tel" id="phone" placeholder="WhatsApp Phone Number">
 
-            Free Delivery Above ₹999
-            <br><br>
+            <label>Password</label>
+            <input type="password" id="regPassword" placeholder="Password" required>
 
-            Buy One Get One on Selected Products
-            <br><br>
+            <label>Confirm Password</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
 
-            Extra Cashback on Electronics
+            <p id="registerMessage" class="message"></p>
+            <button type="submit" class="primary-btn">Register</button>
+        </form>
 
-        </td>
+        <p>Already have an account? <a href="#login" onclick="showPage('login')">Login</a></p>
+        <button class="secondary-btn" onclick="showPage('home')">← Back to Home</button>
+    </div>
+</section>
 
-    </tr>
+<!-- ================= ADMIN DASHBOARD ================= -->
+<section id="admin-page" class="page-section admin-page" style="display:none;">
+    <header class="admin-header">
+        <div>
+            <h1>🔐 Admin Dashboard</h1>
+            <p id="adminWelcome"></p>
+        </div>
+        <button onclick="logout()">Logout</button>
+    </header>
 
+    <main class="admin-content">
+        <section class="admin-section">
+            <h2>👥 Registered Users</h2>
+            <div id="usersList"></div>
+        </section>
 
-    <tr bgcolor="#E8F5E9">
+        <section class="admin-section">
+            <h2>📦 Customer Orders</h2>
+            <div id="ordersList"></div>
+        </section>
+    </main>
+</section>
 
-        <td align="center">
-            <h3>Easy Returns</h3>
-        </td>
-
-        <td align="center">
-            <h3>24 x 7 Support</h3>
-        </td>
-
-        <td align="center">
-            <h3>Secure Payment</h3>
-        </td>
-
-        <td align="center">
-            <h3>Fast Delivery</h3>
-        </td>
-
-    </tr>
-
-
-    <tr bgcolor="#4CAF50">
-
-        <td colspan="4" align="center">
-
-            <font color="white">
-
-                <h2>KLECommerce</h2>
-
-                Home |
-                Products |
-                About Us |
-                Contact Us |
-                Help
-
-                <br><br>
-
-                Copyright © 2026 KLECommerce
-
-            </font>
-
-        </td>
-
-    </tr>
-
-</table>
-
-    <script src="script.js"></script>
-
-
+<script src="script.js"></script>
 </body>
-
 </html>
