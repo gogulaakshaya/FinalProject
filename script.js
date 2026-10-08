@@ -127,6 +127,22 @@ const products = [
         rating: 4.4,
         image: "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=500"
     },
+    {
+        id: 8,
+        name: "Vitamin C Face Serum",
+        price: 399,
+        category: "Skincare",
+        rating: 4.5,
+        image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500" 
+    },
+    {
+        id: 8,
+        name: "Daily Sunscreen SPF 50",
+        price: 599,
+        category: "Skincare",
+        rating: 4.4,
+        image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=500" 
+    },
 
     {
         id: 9,
